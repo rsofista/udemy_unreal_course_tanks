@@ -28,5 +28,5 @@ public:
 
 	void SetBarrel(UStaticMeshComponent* Barrel);
 
-	void AimAt(const FVector* HitLocation);
+	void AimAt(const FVector* HitLocation, const float LauchSpeed);
 };

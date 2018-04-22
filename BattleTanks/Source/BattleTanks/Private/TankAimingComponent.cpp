@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Kismet/GameplayStatics.h"
+#include "Components/StaticMeshComponent.h"
+#include "Math/Vector.h"
 #include "TankAimingComponent.h"
-
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -37,7 +39,29 @@ void UTankAimingComponent::SetBarrel(UStaticMeshComponent* Barrel)
 	this->Barrel = Barrel;
 }
 
-void UTankAimingComponent::AimAt(const FVector * HitLocation)
+void UTankAimingComponent::AimAt(const FVector * HitLocation, const float LauchSpeed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *this->GetOwner()->GetName(), *HitLocation->ToString(), *this->Barrel->GetComponentLocation().ToString());
+	FVector BarrelTipLocation = this->Barrel->GetSocketLocation(FName("Tip"));
+	FVector LauchVelocity;
+	const FCollisionResponseParams& ResponseParam = FCollisionResponseParams::DefaultResponseParam;
+	const TArray<AActor*> ActorsToIgnore = TArray<AActor*>();
+
+	if (
+		UGameplayStatics::SuggestProjectileVelocity(
+			this,
+			LauchVelocity,
+			BarrelTipLocation,
+			*HitLocation,
+			LauchSpeed,
+			false,
+			0,
+			0,
+			ESuggestProjVelocityTraceOption::DoNotTrace,
+			ResponseParam,
+			ActorsToIgnore,
+			true
+		)
+	) {
+		UE_LOG(LogTemp, Warning, TEXT("Here: %s"), *LauchVelocity.GetSafeNormal().ToString());
+	}
 }

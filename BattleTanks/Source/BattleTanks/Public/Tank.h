@@ -28,7 +28,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 10000; // 1000 m/s
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

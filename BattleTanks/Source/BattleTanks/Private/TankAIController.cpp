@@ -3,6 +3,7 @@
 #include "TankAIController.h"
 
 #include "TankPlayerController.h"
+#include "Engine/World.h"
 
 void ATankAIController::BeginPlay()
 {
@@ -20,19 +21,18 @@ void ATankAIController::BeginPlay()
 	}
 }
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	const FVector PlayerLocation = this->GetPlayerTank()->GetActorLocation();
+
+	this->GetControlledTank()->AimAt(&PlayerLocation);
+}
+
 ATank* ATankAIController::GetPlayerTank() const
 {
 	return Cast<ATankPlayerController>(this->GetWorld()->GetFirstPlayerController())->GetControlledTank();
-	/*
-	ATankPlayerController* PlayerController = Cast<ATankPlayerController>(this->GetWorld()->GetFirstPlayerController());
-
-	if (PlayerController != nullptr) {
-		return PlayerController->GetControlledTank();
-	}
-	else {
-		return nullptr;
-	}
-	*/
 }
 
 ATank* ATankAIController::GetControlledTank() const

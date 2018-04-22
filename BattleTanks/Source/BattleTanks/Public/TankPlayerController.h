@@ -2,8 +2,6 @@
 
 #pragma once
 
-#define OUT
-
 #include "Tank.h"
 
 #include "GameFramework/PlayerController.h"
@@ -18,9 +16,7 @@ class BATTLETANKS_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 protected:
-	virtual void BeginPlay() override;
-
-	
+	virtual void BeginPlay() override;	
 
 public:
 	virtual void Tick(float DeltaTime) override;
@@ -36,7 +32,7 @@ protected:
 private:
 	void AimAtCrossHair();
 
-	bool GetSightRayHitLocation(OUT FVector *OutHitLocation) const;
+	bool GetSightRayHitLocation(FVector *OutHitLocation) const;
 public:	
 	ATank* GetControlledTank() const;
 };

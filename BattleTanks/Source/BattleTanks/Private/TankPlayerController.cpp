@@ -2,6 +2,8 @@
 
 #include "TankPlayerController.h"
 
+#include "Tank.h"
+
 #include "Math/Vector.h"
 #include "Engine/World.h"
 

@@ -1,40 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Kismet/GameplayStatics.h"
-#include "Components/StaticMeshComponent.h"
-#include "Math/Vector.h"
 #include "TankAimingComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Math/Vector.h"
+#include "TankBarrel.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
 
-
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
-void UTankAimingComponent::SetBarrel(UStaticMeshComponent* Barrel)
+void UTankAimingComponent::SetBarrel(UTankBarrel* Barrel)
 {
 	this->Barrel = Barrel;
 }
@@ -43,8 +24,6 @@ void UTankAimingComponent::AimAt(const FVector * HitLocation, const float LauchS
 {
 	FVector BarrelTipLocation = this->Barrel->GetSocketLocation(FName("Tip"));
 	FVector LauchVelocity;
-	const FCollisionResponseParams& ResponseParam = FCollisionResponseParams::DefaultResponseParam;
-	const TArray<AActor*> ActorsToIgnore = TArray<AActor*>();
 
 	if (
 		UGameplayStatics::SuggestProjectileVelocity(
@@ -56,12 +35,12 @@ void UTankAimingComponent::AimAt(const FVector * HitLocation, const float LauchS
 			false,
 			0,
 			0,
-			ESuggestProjVelocityTraceOption::DoNotTrace,
-			ResponseParam,
-			ActorsToIgnore,
-			true
+			ESuggestProjVelocityTraceOption::DoNotTrace
 		)
 	) {
-		UE_LOG(LogTemp, Warning, TEXT("Here: %s"), *LauchVelocity.GetSafeNormal().ToString());
+		UE_LOG(LogTemp, Warning, TEXT("%f: Here: %s"), this->GetWorld()->GetTimeSeconds(), *LauchVelocity.GetSafeNormal().ToString());
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("%f: NOPE"), this->GetWorld()->GetTimeSeconds());
 	}
 }

@@ -16,5 +16,5 @@ private:
 	UPROPERTY(EditAnyWhere, Category = Setup)
 	float MaxDegreesPerSecond = 15;
 public:
-	void Rotate(const float NewYaw);
+	void Rotate(const float RelativeSpeed);
 };

@@ -5,7 +5,10 @@
 #include "Engine/World.h"
 #include "Math.h"
 
-void UTankTurret::Rotate(const float NewYaw)
+void UTankTurret::Rotate(const float RelativeSpeed)
 {
-	this->SetRelativeRotation(FRotator(this->RelativeRotation.Pitch, NewYaw, this->RelativeRotation.Roll));
+	const float RotationChange = FMath::Clamp<float>(RelativeSpeed, -1, +1) * this->MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
+	const float NewRotation = this->RelativeRotation.Yaw + RotationChange;	
+
+	this->SetRelativeRotation(FRotator(0, NewRotation, 0));
 }

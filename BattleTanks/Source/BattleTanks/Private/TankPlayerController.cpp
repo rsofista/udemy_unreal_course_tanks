@@ -24,11 +24,13 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimAtCrossHair()
 {
-	FVector HitLocation;
+	FVector HitLocation;	
 
 	if (this->GetSightRayHitLocation(&HitLocation)) {
-		this->GetControlledTank()->AimAt(&HitLocation);
-	}
+		
+	};
+
+	this->GetControlledTank()->AimAt(&HitLocation);
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector* OutHitLocation) const
@@ -43,7 +45,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector* OutHitLocation) cons
 	);
 
 	FVector WorldLocation, LookDirection;
-
+	
 	if (this->DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, WorldLocation, LookDirection)) {
 		FHitResult Hit;
 		const FVector VectorStart = this->PlayerCameraManager->GetCameraLocation();
@@ -63,12 +65,19 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector* OutHitLocation) cons
 
 			return true;
 		}
-	}
+		else {
+			OutHitLocation->X = VectorEnd.X;
+			OutHitLocation->Y = VectorEnd.Y;
+			OutHitLocation->Z = VectorEnd.Z;
 
-	OutHitLocation->X = 0;
-	OutHitLocation->Y = 0;
-	OutHitLocation->Z = 0;
+			return false;
+		}
+	}
 	
+	OutHitLocation->X = ScreenLocation.X;
+	OutHitLocation->Y = ScreenLocation.Y;
+	OutHitLocation->Z = 0;
+
 	return false;
 }
 

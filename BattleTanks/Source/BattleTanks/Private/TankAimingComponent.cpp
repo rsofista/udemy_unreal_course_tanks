@@ -28,15 +28,14 @@ void UTankAimingComponent::SetTurret(UTankTurret* Turret)
 	this->Turret = Turret;
 }
 
-void UTankAimingComponent::AimAt(const FVector * HitLocation, const float LauchSpeed)
+void UTankAimingComponent::AimAt(const FVector* HitLocation, const float LauchSpeed)
 {
 	FVector BarrelTipLocation = this->Barrel->GetSocketLocation(FName("BarrelTipSocket"));
 	FVector LauchVelocity;
 
 	const FCollisionResponseParams& ResponseParam = FCollisionResponseParams::DefaultResponseParam;
 	TArray<AActor*> ActorsToIgnore = TArray<AActor*>();
-	ActorsToIgnore.Add(Cast<AActor>(this->GetOwner()));
-
+	//ActorsToIgnore.Add(Cast<AActor>(this->GetOwner()));
 
 	if (
 		UGameplayStatics::SuggestProjectileVelocity(
@@ -51,7 +50,7 @@ void UTankAimingComponent::AimAt(const FVector * HitLocation, const float LauchS
 			ESuggestProjVelocityTraceOption::DoNotTrace,
 			ResponseParam,
 			ActorsToIgnore,
-			true
+			false
 		)
 	) {
 		const FRotator BarrelRotator = this->Barrel->GetForwardVector().Rotation();
@@ -59,6 +58,14 @@ void UTankAimingComponent::AimAt(const FVector * HitLocation, const float LauchS
 		const FRotator DeltaRotator = AimRotator - BarrelRotator;
 
 		this->Barrel->Elevate(DeltaRotator.Pitch);
-		this->Turret->Rotate(FMath::RInterpTo(BarrelRotator, AimRotator, GetWorld()->DeltaTimeSeconds, 1).Yaw);
+		this->Turret->Rotate(DeltaRotator.Yaw);
+	}
+	else {
+		const FRotator BarrelRotator = this->Barrel->GetForwardVector().Rotation();
+		const FRotator AimRotator = HitLocation->GetSafeNormal().Rotation();
+		const FRotator DeltaRotator = AimRotator - BarrelRotator;
+
+		this->Barrel->Elevate(DeltaRotator.Pitch);
+		this->Turret->Rotate(DeltaRotator.Yaw);
 	}
 }

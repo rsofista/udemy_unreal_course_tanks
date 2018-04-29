@@ -27,10 +27,8 @@ void ATankPlayerController::AimAtCrossHair()
 	FVector HitLocation;	
 
 	if (this->GetSightRayHitLocation(&HitLocation)) {
-		
+		this->GetControlledTank()->AimAt(&HitLocation);
 	};
-
-	this->GetControlledTank()->AimAt(&HitLocation);
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector* OutHitLocation) const
@@ -62,21 +60,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector* OutHitLocation) cons
 			OutHitLocation->X = Hit.Location.X;
 			OutHitLocation->Y = Hit.Location.Y;
 			OutHitLocation->Z = Hit.Location.Z;
-
+			
 			return true;
 		}
-		else {
-			OutHitLocation->X = VectorEnd.X;
-			OutHitLocation->Y = VectorEnd.Y;
-			OutHitLocation->Z = VectorEnd.Z;
-
-			return false;
-		}
 	}
-	
-	OutHitLocation->X = ScreenLocation.X;
-	OutHitLocation->Y = ScreenLocation.Y;
-	OutHitLocation->Z = 0;
 
 	return false;
 }

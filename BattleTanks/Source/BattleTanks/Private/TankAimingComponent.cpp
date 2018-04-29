@@ -35,7 +35,7 @@ void UTankAimingComponent::AimAt(const FVector* HitLocation, const float LauchSp
 
 	const FCollisionResponseParams& ResponseParam = FCollisionResponseParams::DefaultResponseParam;
 	TArray<AActor*> ActorsToIgnore = TArray<AActor*>();
-	//ActorsToIgnore.Add(Cast<AActor>(this->GetOwner()));
+	ActorsToIgnore.Add(Cast<AActor>(this->GetOwner()));
 
 	if (
 		UGameplayStatics::SuggestProjectileVelocity(
@@ -61,11 +61,6 @@ void UTankAimingComponent::AimAt(const FVector* HitLocation, const float LauchSp
 		this->Turret->Rotate(DeltaRotator.Yaw);
 	}
 	else {
-		const FRotator BarrelRotator = this->Barrel->GetForwardVector().Rotation();
-		const FRotator AimRotator = HitLocation->GetSafeNormal().Rotation();
-		const FRotator DeltaRotator = AimRotator - BarrelRotator;
-
-		this->Barrel->Elevate(DeltaRotator.Pitch);
-		this->Turret->Rotate(DeltaRotator.Yaw);
+		UE_LOG(LogTemp, Warning, TEXT("NOPE"))
 	}
 }

@@ -29,9 +29,14 @@ public:
 
 	void AimAt(const FVector* HitLocation);
 
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Fire();
+
 public:
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100; // 100 m/s
+	float LaunchSpeed = 10000; // 10000 m/s
+
+
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

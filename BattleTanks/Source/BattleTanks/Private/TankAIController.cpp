@@ -28,7 +28,7 @@ void ATankAIController::Tick(float DeltaTime)
 
 	const FVector PlayerLocation = this->GetPlayerTank()->GetActorLocation();
 
-	//this->GetControlledTank()->AimAt(&PlayerLocation);
+	this->GetControlledTank()->AimAt(&PlayerLocation);
 }
 
 ATank* ATankAIController::GetPlayerTank() const

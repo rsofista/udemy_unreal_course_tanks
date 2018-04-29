@@ -5,6 +5,7 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+class UTankTurret;
 class UTankBarrel;
 class UTankAimingComponent;
 
@@ -23,11 +24,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrel(UTankBarrel* Barrel);
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurret(UTankTurret* Turret);
+
 	void AimAt(const FVector* HitLocation);
 
 public:
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 10000; // 1000 m/s
+	float LaunchSpeed = 100; // 100 m/s
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

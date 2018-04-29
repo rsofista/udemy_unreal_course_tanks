@@ -63,13 +63,13 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector* OutHitLocation) cons
 
 			return true;
 		}
-		else {
-			return false;
-		}
 	}
-	else {
-		return false;
-	}
+
+	OutHitLocation->X = 0;
+	OutHitLocation->Y = 0;
+	OutHitLocation->Z = 0;
+	
+	return false;
 }
 
 ATank* ATankPlayerController::GetControlledTank() const

@@ -21,8 +21,7 @@ protected:
 	void BeginPlay() override;
 
 private:
-	ATank* GetPlayerTank() const;
+	ATank* GetTargetTank() const;
 
-public:
-	ATank* GetControlledTank() const;
+	ATank* ControlledTank = nullptr;
 };

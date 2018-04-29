@@ -43,4 +43,10 @@ void UTankAimingComponent::AimAt(const FVector * HitLocation, const float LauchS
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("%f: NOPE"), this->GetWorld()->GetTimeSeconds());
 	}
+
+	const FRotator BarrelRotator = this->Barrel->GetForwardVector().Rotation();
+	const FRotator AimRotator = LauchVelocity.GetSafeNormal().Rotation();
+	const FRotator DeltaRotator = AimRotator - BarrelRotator;	
+
+	this->Barrel->Elevate(DeltaRotator.Pitch);
 }

@@ -1,13 +1,32 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankMovementComponent.h"
+#include "Math.h"
+//
+#include "TankTrack.h"
 
-void UTankMovementComponent::IntendMoveFoward(float Throw)
+void UTankMovementComponent::SetTankTracks(UTankTrack* LeftTrack, UTankTrack* RightTrack)
 {
-	UE_LOG(LogTemp, Warning, TEXT("IntendMoveFoward(%f)"), Throw);
+	this->RightTrack = RightTrack;
+	this->LeftTrack = LeftTrack;
 }
 
-void UTankMovementComponent::IntendMoveBackwards(float Throw)
+void UTankMovementComponent::MoveFoward(float Throw)
 {
-	UE_LOG(LogTemp, Warning, TEXT("IntendMoveBackwards(%f)"), Throw);
+	if (!LeftTrack || !RightTrack) { return; }
+
+	Throw = FMath::Clamp<float>(Throw, -1, +1);
+
+	this->LeftTrack->ApplyThrottle(Throw);
+	this->RightTrack->ApplyThrottle(Throw);
+}
+
+void UTankMovementComponent::MoveRight(float Throw)
+{
+	if (!LeftTrack || !RightTrack) { return; }
+
+	Throw = FMath::Clamp<float>(Throw, -1, +1);
+
+	this->LeftTrack->ApplyThrottle(Throw);
+	this->RightTrack->ApplyThrottle(-Throw);
 }

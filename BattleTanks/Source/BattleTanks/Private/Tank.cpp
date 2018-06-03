@@ -2,9 +2,8 @@
 
 #include "Tank.h"
 #include "Engine/World.h"
-
+//
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
 
@@ -15,7 +14,6 @@ ATank::ATank()
 	this->PrimaryActorTick.bCanEverTick = false;
 
 	this->TankAimingComponent = CreateAbstractDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-	this->TankMovementComponent = CreateAbstractDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 // Called to bind functionality to input

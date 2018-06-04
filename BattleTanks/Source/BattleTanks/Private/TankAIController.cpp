@@ -21,6 +21,8 @@ void ATankAIController::Tick(float DeltaTime)
 
 	this->ControlledTank->AimAt(&PlayerLocation);
 	this->ControlledTank->Fire();
+
+	this->MoveToLocation(PlayerLocation, 30.0);
 }
 
 ATank* ATankAIController::GetTargetTank() const

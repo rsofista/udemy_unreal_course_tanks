@@ -61,6 +61,6 @@ void UTankAimingComponent::AimAt(const FVector* HitLocation, const float LauchSp
 		this->Turret->Rotate(DeltaRotator.Yaw);
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("%s %f NOPE"), *this->GetOwner()->GetName(), GetWorld()->GetTimeSeconds());
+		//UE_LOG(LogTemp, Warning, TEXT("%s %f NOPE"), *this->GetOwner()->GetName(), GetWorld()->GetTimeSeconds());
 	}
 }

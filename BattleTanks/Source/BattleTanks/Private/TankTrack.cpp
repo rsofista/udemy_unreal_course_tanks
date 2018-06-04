@@ -13,6 +13,6 @@ void UTankTrack::ApplyThrottle(const float Throttle)
 		TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Le throttle %f"), Throttle)
+		//UE_LOG(LogTemp, Warning, TEXT("Le throttle %f"), Throttle)
 	}
 }
